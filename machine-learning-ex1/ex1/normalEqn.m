@@ -12,8 +12,8 @@ theta = zeros(size(X, 2), 1);
 
 % ---------------------- Sample Solution ----------------------
 
-
-
+% Hint: pinv() also transposes matrices that are non-convertable other than inv()
+theta = pinv(X'*X)*X'*y;
 
 % -------------------------------------------------------------
 
