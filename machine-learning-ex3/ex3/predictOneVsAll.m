@@ -31,9 +31,15 @@ X = [ones(m, 1) X];
 %       
 
 
+##for i = 1:m
+##  temp = sigmoid(X(i,:)*all_theta(1:num_labels,:)');
+##  [max_val, max_idx] = max(temp, [], 2);
+##  p(i,:) += max_idx;
+##endfor
 
-
-
+h_x = sigmoid(X(1:m,:)*all_theta(1:num_labels,:)');
+[max_val, max_idx] = max(h_x, [], 2);
+p(1:m,:) += max_idx;
 
 
 % =========================================================================
