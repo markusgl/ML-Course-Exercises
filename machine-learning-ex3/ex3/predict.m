@@ -21,9 +21,9 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
+%TODO
+%h_x = sigmoid(X*theta);
+%p = h_x >= 0.5;
 
 
 

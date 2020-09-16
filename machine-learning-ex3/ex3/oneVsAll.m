@@ -49,12 +49,14 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+%TODO fmincg
+all_theta(1,:)'
+for i=1:num_labels
+  all_theta = all_theta .+ lrCostFunction(all_theta(i,:)', X, y, lambda);
+  
+endfor
 
-
-
-
-
-
+% returns all theta parametrs in all_theta
 
 
 
