@@ -68,7 +68,7 @@ a_2 = sigmoid(X * Theta1');
 a_2 = [ones(size(a_2, 1), 1) a_2]; % add bias
 h_x = sigmoid(a_2 * Theta2(1:num_labels,:)');
 
-%Recode y to one-hot-vectors
+% Recode y to one-hot-vectors
 y_vec = zeros(size(y), num_labels);
 for i = 1:length(y)
   y_vec(i,y(i)) = 1;
@@ -77,14 +77,22 @@ endfor
 cost = sum(-y_vec .* log(h_x) - (1-y_vec) .* log(1-h_x));
 J = 1/m * sum(cost);
 
-#--- regularization
-#size(sum(Theta1(), 2))
-#size(sum(Theta1(2:end).^2, 1))
-#sum(Theta1, 1) + sum(Theta1(2:end).^2, 1)
-
-#reg = sum(sum(Theta1(2:end).^2, 1)) + sum(sum(Theta2(2:end).^2, 1));
-reg = sum(Theta1(2:end).^2) + sum(Theta2(2:end).^2);
+%--- Regularization
+reg = sum(sum(Theta1(:,2:end).^2, 1)) + sum(sum(Theta2(:,2:end).^2, 1));
 J = J + (lambda / (2*m)) * reg;
+
+%--- Gradients
+delta3 = h_x - y_vec;
+#delta2 = (delta3 * Theta2(:,2:end)) .* sigmoidGradient(X(:,2:end) * Theta1(:,2:end)'); 
+delta2 = (delta3 * Theta2(:,2:end)) .* a_2(:,2:end) .* (1-a_2(:,2:end)); 
+
+%--- Unregularized Gradients
+Theta1_grad += (1/m) * (X' * delta2)';
+Theta2_grad += (1/m) * (a_2' * delta3)';
+
+%--- Regularized Gradients (do not regularize first column)
+Theta1_grad(:,2:end) += (lambda/m) * Theta1(:,2:end);
+Theta2_grad(:,2:end) += (lambda/m) * Theta2(:,2:end);
 
 
 % -------------------------------------------------------------
