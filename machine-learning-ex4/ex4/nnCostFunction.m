@@ -66,26 +66,26 @@ Theta2_grad = zeros(size(Theta2));
 X = [ones(m, 1) X];  % add bias
 a_2 = sigmoid(X * Theta1');
 a_2 = [ones(size(a_2, 1), 1) a_2]; % add bias
-h_x = sigmoid(a_2*Theta2(1:num_labels,:)');
+h_x = sigmoid(a_2 * Theta2(1:num_labels,:)');
 
-%costs
+%Recode y to one-hot-vectors
 y_vec = zeros(size(y), num_labels);
-%Recode y to vectors
 for i = 1:length(y)
   y_vec(i,y(i)) = 1;
 endfor
 
-
 cost = sum(-y_vec .* log(h_x) - (1-y_vec) .* log(1-h_x));
 J = 1/m * sum(cost);
 
-J = J + (lambda / (2*m)) * sum(Theta1(2:end).^2);
-J = J + (lambda / (2*m)) * sum(Theta2(2:end).^2);
+#--- regularization
+#size(sum(Theta1(), 2))
+#size(sum(Theta1(2:end).^2, 1))
+#sum(Theta1, 1) + sum(Theta1(2:end).^2, 1)
 
+#reg = sum(sum(Theta1(2:end).^2, 1)) + sum(sum(Theta2(2:end).^2, 1));
+reg = sum(Theta1(2:end).^2) + sum(Theta2(2:end).^2);
+J = J + (lambda / (2*m)) * reg;
 
-#grad = 1/m * sum((h_x .- y_vec) .* X); 
-%Theta1_grad = grad(2:end)' .+ (lambda/m) * Theta1(2:end);
-%Theta2_grad = grad(2:end)' .+ (lambda/m) * Theta2(2:end);
 
 % -------------------------------------------------------------
 
