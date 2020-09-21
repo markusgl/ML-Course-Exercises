@@ -74,6 +74,7 @@ for i = 1:length(y)
   y_vec(i,y(i)) = 1;
 endfor
 
+% Cost function
 cost = sum(-y_vec .* log(h_x) - (1-y_vec) .* log(1-h_x));
 J = 1/m * sum(cost);
 
