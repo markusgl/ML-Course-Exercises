@@ -20,12 +20,18 @@ grad = zeros(size(theta));
 %
 #X = [ones(m, 1) X];
 
+
 h_x = X * theta;
-J = 1/(2*m) * sum((h_x - y).^2) + lambda/(2*m) * sum(theta(2:end).^2);
-grad = 1/m * sum((h_x - y) .* X);
-grad
-grad(2:end) += (lambda/m) .* theta(2:end)';
-#grad(2:end) = grad(2:end) .+ (lambda/m) .* theta(2:end)';
+J = 1/(2*m) * sum((h_x - y).^2) + (lambda /(2*m)) * sum(theta(2:end).^2);
+
+grad = 1/m * sum((h_x - y) .* X, 1);
+grad(2:end) += (lambda/m) * theta(2:end)';
+
+##if m > 1
+##  grad(:,2:end) += (lambda/m) * theta(2:end)';
+##  #grad(2:end) = grad(2:end)' .+ (lambda/m) * theta(2:end)';
+##  #grad(2:end) += (lambda/m) * theta(2:end)';
+##endif
 
 
 

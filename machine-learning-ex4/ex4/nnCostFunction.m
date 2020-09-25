@@ -85,7 +85,8 @@ J = J + (lambda / (2*m)) * reg;
 %--- Gradients
 delta3 = h_x - y_vec;
 #delta2 = (delta3 * Theta2(:,2:end)) .* sigmoidGradient(X(:,2:end) * Theta1(:,2:end)'); 
-delta2 = (delta3 * Theta2(:,2:end)) .* a_2(:,2:end) .* (1-a_2(:,2:end)); 
+delta2 = (delta3 * Theta2(:,2:end)) .* sigmoidGradient(X * Theta1'); 
+#delta2 = (delta3 * Theta2(:,2:end)) .* a_2(:,2:end) .* (1-a_2(:,2:end)); 
 
 %--- Unregularized Gradients
 Theta1_grad += (1/m) * (X' * delta2)';
