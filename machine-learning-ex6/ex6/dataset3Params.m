@@ -23,8 +23,14 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+%Train
+C = 1;
+model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
+visualizeBoundary(X, y, model);
 
 
+pred = svmPredict(model, X)
+pred_error = mean(double(predictions ~= yval))
 
 
 
