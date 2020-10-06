@@ -24,13 +24,39 @@ sigma = 0.3;
 %
 
 %Train
-C = 1;
-model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
-visualizeBoundary(X, y, model);
+#steps = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+C_vals = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+sigma_vals = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
+count = 0;
+predictions = zeros(size(yval));
+min_error = 1;
 
-pred = svmPredict(model, X)
-pred_error = mean(double(predictions ~= yval))
+#results = zeros(length(C_list) * length(s_list), 3)
+
+for temp_C = C_vals  
+  for temp_sigma = sigma_vals    
+    #model = svmTrain(X, y, temp_C, @(x1, x2) gaussianKernel(X(:,1), X(:,2), temp_sigma)); 
+    #model = svmTrain(X, y, temp_C, @gaussianKernel(X(:,1), X(:,2), temp_sigma)); 
+    model= svmTrain(X, y, temp_C, @(x1, x2) gaussianKernel(x1, x2, temp_sigma)); 
+    %visualizeBoundary(X, y, model);
+    predictions = svmPredict(model, Xval);
+    pred_error = mean(double(predictions ~= yval));
+    
+    if pred_error < min_error
+      min_error = pred_error;
+      C = temp_C;
+      sigma = temp_sigma;
+    endif
+    
+    % save the results in the matrix
+    #results(row,:) = [C_val sigma_val err_val]
+    #row = row + 1;
+    count += 1;
+  endfor
+endfor
+
+#count
 
 
 
