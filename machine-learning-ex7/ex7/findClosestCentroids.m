@@ -22,7 +22,17 @@ idx = zeros(size(X,1), 1);
 %
 
 
-
+min = 100;
+for i = 1:length(X)
+  for j = 1:K
+    temp = norm(X(i,:) - centroids(j,:));
+    if temp < min
+      min = temp;
+      idx(i) = j;
+    endif
+  endfor
+  min = 100;
+endfor
 
 
 
