@@ -40,16 +40,13 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+#[nn_params, cost] = fmincg(costFunction, initial_nn_params, options)
+
+J = sum(1/2 * sum((X*Theta'.*R - Y).^2));
 
 
-
-
-
-
-
-
-
-
+##J = 1/m * sum(-y .* log(h_x) - (1-y) .* log(1-h_x));
+##grad = 1/m * sum((h_x - y) .* X); 
 
 
 
